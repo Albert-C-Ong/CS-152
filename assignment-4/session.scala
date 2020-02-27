@@ -67,35 +67,75 @@ object session extends App {
     nums.filter(_ % 2 == 1).map(x => x * x).reduce((a, b) => a + b)
   }
   
-  var test = List(1, 2, 3, 4, 5)
+  var inputs = List(1, 2, 3, 4, 5)
   
-  //~ println(sumCubes1(test))
-  //~ println(sumCubes2(test))
-  //~ println(sumCubes3(test))
-  //~ println(sumCubes4(test))
+  println("Problem #1: ")
+  println("inputs = " + inputs)
+  println("sumCubes1(inputs) = " + sumCubes1(inputs))
+  println("sumCubes2(inputs) = " + sumCubes2(inputs))
+  println("sumCubes3(inputs) = " + sumCubes3(inputs))
+  println("sumCubes4(inputs) = " + sumCubes4(inputs) + "\n")
   
   
   //====================================================================
   // Problem #2
   //====================================================================
   
-  
-  //~ def sumOfSums1(nums: List[(Int)]): Int {
+  // Iterative version
+  def sumOfSums1(nums: List[List[Int]]): Int = {
     
-    //~ var sum = 0
+    var sum = 0
     
-    //~ for (row <- nums) {
-      //~ for (num <- row) {
-        //~ sum += num
-      //~ }
-    //~ }
+    for (row <- nums) {
+      for (num <- row) {
+        sum += num
+      }
+    }
     
-    //~ sum
-  //~ }
+    sum
+  }
   
-  //~ var nums = List(List(1, 2, 3), List(4, 5, 6))
   
-  //~ println(sumOfSums1(nums))
+  // Recursive version
+  def sumOfSums2(nums: List[List[Int]]): Int = {
+    
+    var list_sum = nums(0).foldLeft(0)(_ + _)
+    
+    if (nums.length == 1) {
+      list_sum
+    }
+    else {
+      list_sum + sumOfSums2(nums.drop(1))
+    }
+  }
+  
+  
+  // Tail-recursive version
+  def sumOfSums3(nums: List[List[Int]], sum: Int = 0): Int = {
+    
+    var total = sum + nums(0).foldLeft(0)(_ + _)
+    
+    if (nums.length == 1) {
+      total
+    }
+    else {
+      sumOfSums3(nums.drop(1), total)
+    }
+  }
+  
+    // Pipeline version
+  def sumOfSums4(nums: List[List[Int]]): Int = {
+    nums.map(x => x.reduce((a, b) => a + b)).reduce((c, d) => c + d)
+  }
+  
+  var nums = List(List(1, 2, 3), List(4, 5, 6))
+  
+  println("Problem #2: ")
+  println("nums = " + nums)
+  println("sumOfSums1(nums) = " + sumOfSums1(nums))
+  println("sumOfSums2(nums) = " + sumOfSums2(nums))
+  println("sumOfSums3(nums) = " + sumOfSums3(nums))
+  println("sumOfSums4(nums) = " + sumOfSums4(nums) + "\n")
   
   
   //====================================================================
@@ -103,15 +143,31 @@ object session extends App {
   //====================================================================
   
   
+  
   //====================================================================
   // Problem #7
   //====================================================================
+  
+  
   
   
   //====================================================================
   // Problem #13
   //====================================================================
   
+  
+  var a13 = Stream.from(1).map(math.pow(_, 0).toInt) // all 1's
+  var b13 = Stream.from(1) // all non-negative integers
+  var c13 = b13.map(_ * 2) // all non-negative even integers
+  var d13 = b13.map(math.pow(_, 2).toInt) // all squares of integers
+  
+  
+  println("Problem #13: ")
+  for (stream <- Array(a13, b13, c13, d13)) {
+    println(stream + " = " + stream.take(10).toList)
+  }
+  println()
+
   
   //====================================================================
   // Problem #15
