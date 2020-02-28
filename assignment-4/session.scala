@@ -142,13 +142,163 @@ object session extends App {
   // Problem #6
   //====================================================================
   
+  // Iterative version
+  def filterPredicate1[T](
+    values: List[T], 
+    predicate: (T) => Boolean): List[T] = {
+    
+    var output = List[T]()
+    
+    for (value <- values) {
+      
+      if (predicate(value)) {
+        output :+= value
+      }
+    }
+    
+    output
+  }
+  
+  
+  // Recursive version
+  def filterPredicate2[T](
+    values: List[T], 
+    predicate: (T) => Boolean): List[T] = {
+    
+    if (values.length == 1) { 
+      
+      if (!predicate(values(0))) {
+        values.drop(1)
+      }
+      
+      values
+    }
+    else {
+      
+      if (predicate(values(0))) {
+        List(values(0)) ++ filterPredicate2(values.drop(1), predicate)
+      }
+      else {
+        filterPredicate2(values.drop(1), predicate)
+      }
+      
+    }
+  }
+  
+  
+  // Tail-recursive version
+  def filterPredicate3[T](
+    values: List[T], 
+    predicate: (T) => Boolean, 
+    ans: List[T] = List[T]()): List[T] = {
+    
+    var result = ans
+    
+    if (predicate(values(0))) {
+      result = result ++ List(values(0))
+    }
+    
+    
+    if (values.length == 1) {
+      result
+    }
+    else {
+      filterPredicate3(values.drop(1), predicate, result)
+    }
+  }
+  
+  // Pipeline version
+  def filterPredicate4[T](
+    values: List[T], 
+    predicate: (T) => Boolean): List[T] = {
+    
+    values.filter(x => predicate(x))
+  }
+   
+   
+  var values = List(10, 6, 3, 1, 8, 16)
+  def greaterThanFive(num: Int): Boolean = {num > 5}
+  
+  println("Problem #6: ")
+  println("values = " + values)
+  println("filterPredicate1(values, greaterThanFive) = " + filterPredicate1(values, greaterThanFive))
+  println("filterPredicate2(values, greaterThanFive) = " + filterPredicate2(values, greaterThanFive))
+  println("filterPredicate3(values, greaterThanFive) = " + filterPredicate3(values, greaterThanFive))
+  println("filterPredicate4(values, greaterThanFive) = " + filterPredicate4(values, greaterThanFive) + "\n")
   
   
   //====================================================================
   // Problem #7
   //====================================================================
   
+  // Iterative version
+  def checkPredicate1[T](
+    values: List[T], 
+    predicate: (T) => Boolean): Boolean = {
+    
+    var result = true
+    
+    for (value <- values) {
+      
+      if (!predicate(value)) {
+        result = false
+      }
+    }
+    
+    result
+  }
   
+  
+  // Recursive version
+  def checkPredicate2[T](
+    values: List[T], 
+    predicate: (T) => Boolean): Boolean = {
+    
+    var check_val = predicate(values(0)) 
+    
+    if (values.length == 1) {
+      check_val
+    }
+    else {
+      check_val && checkPredicate2(values.drop(1), predicate)
+    }
+  }
+  
+  
+  // Tail-recursive version
+  def checkPredicate3[T](
+    values: List[T], 
+    predicate: (T) => Boolean, 
+    result: Boolean = true): Boolean = {
+    
+    if (values.length == 1) {
+      result
+    }
+    else {
+      checkPredicate3(values.drop(1), 
+                      predicate, 
+                      result && predicate(values(0)))
+    }
+  }
+  
+  
+  // Pipeline version
+  def checkPredicate4[T](
+    values: List[T], 
+    predicate: (T) => Boolean): Boolean = {
+    
+    values.filter(x => predicate(x)).length == values.length
+  }
+  
+  
+  var values2 = List(6, 9, 14, 7, 8)
+
+  println("Problem #7: ")
+  println("values2 = " + values2)
+  println("checkPredicate1(values2, greaterThanFive) = " + checkPredicate1(values2, greaterThanFive))
+  println("checkPredicate2(values2, greaterThanFive) = " + checkPredicate2(values2, greaterThanFive))
+  println("checkPredicate3(values2, greaterThanFive) = " + checkPredicate3(values2, greaterThanFive))
+  println("checkPredicate4(values2, greaterThanFive) = " + checkPredicate4(values2, greaterThanFive) + "\n")
   
   
   //====================================================================
@@ -209,7 +359,7 @@ object session extends App {
     sum
   }
   
-  println("Problem #16")
+  println("Problem #16: ")
   println("if x = 2, x² + 2x + 1 = " 
     + evalPoly(List((1.0, 2.0), (2.0, 1.0), (1.0, 0.0)), 2.0))
   println("if x = 5, x² + 2x + 1 = " 
