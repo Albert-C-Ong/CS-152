@@ -8,7 +8,7 @@
  * 
  * # 1, 2, 6, 7, 13, 15, 16
  * 
- * Revision: 2020.02.25
+ * Revision: 2020.02.29
  */
 
 object session extends App {
@@ -145,7 +145,7 @@ object session extends App {
   // Iterative version
   def filterPredicate1[T](
     values: List[T], 
-    predicate: (T) => Boolean): List[T] = {
+    predicate: (T) => Boolean): Int = {
     
     var output = List[T]()
     
@@ -156,31 +156,26 @@ object session extends App {
       }
     }
     
-    output
+    output.length
   }
   
   
   // Recursive version
   def filterPredicate2[T](
     values: List[T], 
-    predicate: (T) => Boolean): List[T] = {
+    predicate: (T) => Boolean): Int = {
     
-    if (values.length == 1) { 
-      
-      if (!predicate(values(0))) {
-        values.drop(1)
-      }
-      
-      values
+    var add = 0
+    
+    if (predicate(values(0))) {
+      add = 1
+    }
+    
+    if (values.length == 1) {
+      add
     }
     else {
-      
-      if (predicate(values(0))) {
-        List(values(0)) ++ filterPredicate2(values.drop(1), predicate)
-      }
-      else {
-        filterPredicate2(values.drop(1), predicate)
-      }
+      add + filterPredicate2(values.drop(1), predicate)
       
     }
   }
@@ -190,12 +185,12 @@ object session extends App {
   def filterPredicate3[T](
     values: List[T], 
     predicate: (T) => Boolean, 
-    ans: List[T] = List[T]()): List[T] = {
+    ans: Int = 0): Int = {
     
     var result = ans
     
     if (predicate(values(0))) {
-      result = result ++ List(values(0))
+      result += 1
     }
     
     
@@ -210,9 +205,9 @@ object session extends App {
   // Pipeline version
   def filterPredicate4[T](
     values: List[T], 
-    predicate: (T) => Boolean): List[T] = {
+    predicate: (T) => Boolean): Int = {
     
-    values.filter(x => predicate(x))
+    values.filter(x => predicate(x)).length
   }
    
    
