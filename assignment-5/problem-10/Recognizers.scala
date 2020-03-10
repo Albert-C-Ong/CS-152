@@ -4,7 +4,7 @@
  * CS 152 Spring 2020
  * Professor Jon Pearce
  * 
- * Assignment #5: problem #10
+ * Assignment #5: Problem #10 - Recognizers
  * 
  * Revision: 2020.03.05
  */

@@ -6,18 +6,38 @@
  * 
  * Assignment #5: Problem #9 - Real Lab
  * 
- * Revision: 2020.03.06
+ * Revision: 2020.03.09
  */
 
-object RealLab extends App {
+
+class Real(val scalaValue: Double) extends Ordered[Real] with Equals {
   
-  class Real(val scalaValue: Double) extends Ordered[Real] with Equals {
-  
-    override def equals(other: Real): Boolean = {
-      scalaValue == other.scalaValue
+  def canEqual(x: Any) = x.isInstanceOf[Real]
+
+
+  override def equals(that: Any): Boolean = {
+    
+    that match {
+      case that: Real => { this.scalaValue == that.scalaValue}
+      case _ => false
     }
-  
   }
+  
+  
+  override def compare(that: Real): Int = {
+    (this.scalaValue - that.scalaValue).toInt
+  }
+  
+  def *(that: Real): Double = { this.scalaValue * that.scalaValue }
+}
+
+
+object Real {
+  def apply(scalaValue: Double) = new Real(scalaValue)
+}
+
+
+object RealLab extends App {
   
   var r1 = Real(3.14)
   var r2 = Real(2.71)

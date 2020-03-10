@@ -4,9 +4,9 @@
  * CS 152 Spring 2020
  * Professor Jon Pearce
  * 
- * Assignment #5: problem #2
+ * Assignment #5: Problem #2 - Gladiator Lab
  * 
- * Revision: 2020.03.06
+ * Revision: 2020.03.09
  */
 
 
