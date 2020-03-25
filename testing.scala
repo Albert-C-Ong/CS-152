@@ -9,5 +9,5 @@
 
 object testing extends App {
 
-  println("Hello world!")
+  println(System.getProperty("user.dir"))
 }
