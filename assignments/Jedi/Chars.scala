@@ -8,6 +8,8 @@ case class Chars(val value: String) extends Literal with Ordered[Chars] with Equ
   
   override def toString = value.toString
   
+  def substring(a: Integer, b: Integer) = Chars(this.value.substring(a.value, b.value))
+  
   def compare(other: Chars): Int = if (this.value < other.value) -1 else if (other.value < this.value) 1 else 0
   
   override def canEqual(other: Any) =  other.isInstanceOf[Chars]
@@ -18,3 +20,7 @@ case class Chars(val value: String) extends Literal with Ordered[Chars] with Equ
        case _ => false
     }
 }
+
+//~ object Chars {
+  //~ def apply(value: String) = new Chars(value)
+//~ }

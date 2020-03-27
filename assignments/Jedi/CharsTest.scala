@@ -1,5 +1,5 @@
 
-// package test
+package test
 
 import value._
 
@@ -13,7 +13,7 @@ object CharsTest extends App {
   
   println("s4 = " + s4)
   
-  // println(s4.substring(Integer(3), Integer(8))) // need to implement later
+  println(s4.substring(Integer(3), Integer(8)))
   
   println(s1 + " < " + s3 + " = " + (s1 < s3))
   println(s1 + " == " + s5 + " = " + (s1 == s5))

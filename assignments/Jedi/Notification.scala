@@ -16,7 +16,7 @@ object Notification {
   def apply(name: String) = new Notification(name)
   
   // Pre-defined notifications
-  def ok() = apply("OK")
-  def done() = apply("DONE")
-  def unspecified() = apply("UNSPECIFIED")
+  val OK = new Notification("OK")
+  val DONE = new Notification("DONE")
+  val UNSPECIFIED = new Notification("UNSPECIFIED")
 }
