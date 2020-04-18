@@ -1,9 +1,9 @@
 
 package expression
 
-//~ import value.Value
-//~ import context.Environment
+import value.Value
+import context.Environment
 
 trait Expression {
-  // def execute
+  def execute(env: Environment): Value
 }
