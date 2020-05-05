@@ -1,9 +1,4 @@
 
 package expression
 
-import value._
-import context._
-
-trait SpecialForm {
-  ;
-}
+trait SpecialForm extends Expression 
