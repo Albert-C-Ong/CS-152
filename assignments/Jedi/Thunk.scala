@@ -16,3 +16,7 @@ class Thunk(body: Expression, defEnv: Environment) extends Closure(Nil, body, de
     else cache
   }
 }
+
+object Thunk {
+  def apply(body: Expression, env: Environment): Thunk = new Thunk(body, env)
+}

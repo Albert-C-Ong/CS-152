@@ -4,11 +4,23 @@ package expression
 import value._
 import context._
 
-case class Conjunction(cond1: Expression, cond2: Expression) extends SpecialForm {
+case class Conjunction(val ops: List[Expression]) extends SpecialForm {
+  
   def execute(env: Environment): Value = {
-    val ex_cond1 = cond1.execute(env)
-    val ex_cond2 = cond2.execute(env)
+    var i = 0
+    var result = true
     
-    Boole(ex_cond1.asInstanceOf[Boole].value && ex_cond2.asInstanceOf[Boole].value)
+    while (i < ops.size && result) {
+      
+      val executedOp = ops(i).execute(env)
+      
+      if (!executedOp.isInstanceOf[Boole])
+        throw new TypeException("Conjunction requires type Boole only")
+      else if (!executedOp.asInstanceOf[Boole].value)
+        result = false
+      else i = i + 1
+    }
+    
+    Boole(result)
   }
 }

@@ -10,5 +10,8 @@
 import scala.util.parsing.combinator._
 
 object testing extends App {
+  
+  def symbol: Parser[Any] = "+" | "-" | "*"
 
+  def number: Parser[Int] = """(0|[1-9]\d*)""".r ^^ { _.toInt }
 }
